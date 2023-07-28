@@ -1,0 +1,8 @@
+package in.onesoft.filesupload;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QualificationRepository  extends JpaRepository<QualificationEntity, Integer>{
+	
+
+}

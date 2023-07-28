@@ -1,0 +1,5 @@
+package com.shocart.controller;
+
+public class ShopController {
+
+}

@@ -1,0 +1,79 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script>
+    <style>
+table, th, td {
+  border: 1px solid rgb(17, 17, 17);
+  border-collapse: collapse;
+  border-style: solid;
+}
+th,td{
+    background-color: #1ad4f5;
+}
+    
+th, td {
+                 padding-top: 10px;
+                padding-bottom: 20px;
+                padding-left: 30px;
+                padding-right: 40px;
+         }
+ </style>
+ </head>            
+  <body>
+ <div id ="tb1">
+<br>
+<h2>New Project</h2>
+<table>
+<tr>
+<td> Id</td>
+<td> Brand</td>
+<td>Model</td>
+<td>Enginecc</td>
+</tr>
+
+
+</table>
+    </div>
+
+<input type="button" value="submit" onclick="SetTable();">
+</body>
+<script>
+     function SetTable(){
+        $.ajax({
+
+             url:'http://localhost:8080/cars/',
+
+             success: function (result){
+            	 var text=JSON.stringify(result);
+                 document.getElementById('tb1').innerHTML=text;
+             },
+             error: function(error){
+                 console.log(error);
+             
+             
+                 for( var i =0; i<result.length ; i++ ){
+                	 
+                	 html + ='<tr>';
+                	 var cars =result[i];
+                	 html+="<td>"+cars.id+"</td>";
+                	 html+="<td>"+cars.name+"</td>";
+                	 html+="<td>"+cars.model+"</td>";
+                	 html+="<td>"+cars.price+"</td>";
+                	 html+='<tr>';
+                 }
+             
+              html+="</table>"
+              
+              document.getElementById('tb1').innerHTML =html;		
+             
+             }	
+             
+             error: function (error) {
+            	 console.log(error);
+        });
+        
+     }
+     
+</script>
+
+</html>

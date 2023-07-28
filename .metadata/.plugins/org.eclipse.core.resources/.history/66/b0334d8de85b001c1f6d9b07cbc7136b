@@ -1,0 +1,15 @@
+package in.onesoft.bikes;
+
+import javax.persistence.Entity;
+
+@Entity(name = "useremail")
+public class UserEmailEntity {
+	
+	 int id;
+	 int userid;
+	 String email;
+	 String userpassword;
+	 String username;
+	
+	
+}

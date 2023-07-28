@@ -1,0 +1,21 @@
+package in.onesoft.bikes;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface UserQualificationRepository  extends JpaRepository<UserQualificationEntity, Integer>{
+	
+	@Query(value="select useraddress.street ,useraddress.city ,userexperience.companyname  from useraddress,userexperience where useraddress.userid=userexperience.userid",nativeQuery = true)
+	 public List<UseraddressEntity>getvalueByName();
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

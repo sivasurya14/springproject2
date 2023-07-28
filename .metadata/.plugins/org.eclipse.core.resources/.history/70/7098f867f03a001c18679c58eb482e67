@@ -1,0 +1,53 @@
+package com.surya;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class EmployeDao {
+	@Autowired
+	JdbcTemplate temp;
+	
+	public void addDetails(EmployeeModel  em) {
+		temp.update("INSERT INTO emp(employeId,employeName,employecity)VALUES(?,?,?)",em.getEmployeId(),em.getEmployeName(),em.getEmployeCity());
+	}
+	
+	public void editDetails(EmployeeModel em,int employeId) {
+		
+		temp.update("UPDATE STUD emp employeName=?,employeCity=? WHERE employeId=?",em.getEmployeName(),em.getEmployeCity(),employeId);
+		
+	System.out.println("update data successfully");}
+	
+	public EmployeeModel findOneId (int employeId) {
+		 EmployeeModel em=(EmployeeModel)temp.queryForObject("SELECT * FROM emp WHERE employeeId=?", new  Object[] {employeId},new BeanPropertyRowMapper<EmployeeModel>(EmployeeModel.class)); 
+		 
+		 return em;}
+	
+	public List<EmployeeModel>findAllDetails(){
+		
+		List<EmployeeModel>li=temp.query("SELECT * FROM emp ",new BeanPropertyRowMapper(EmployeeModel.class));
+		 return li;}
+	
+	public void deleteDetails(int employeeId) {
+		
+		temp.update("DELETE FROM STUD WHERE employeeId=?", employeeId);
+		
+		System.out.println("delete data successfully");
+		
+	
+		 
+		 
+		 
+		 
+		
+		
+	}
+	
+	
+	
+
+}

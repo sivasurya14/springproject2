@@ -1,0 +1,47 @@
+package in.onesoft.car;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@CrossOrigin
+public class CarController {
+@Autowired
+CarRepository carRepo;
+     @GetMapping("/get")
+     public String showMEssage() {
+	   return "Welcome to Rest Api";	
+	}
+     
+     @GetMapping("/cars/")
+     public List<CarEntity> allCar() {
+    	 List<CarEntity> li=carRepo.findAll();
+    	 return li; 
+     }
+     @PostMapping("/save/")
+     public  String saveAll (@RequestBody CarEntity car) {
+    	 carRepo.save(car);
+    	 return "saved data ";
+     }
+     
+     @DeleteMapping("/delete/{id}")     
+     public String deleteById(@PathVariable int id) {
+    	 carRepo.deleteById(id);
+    	 return "delete Data Successfully";
+    			
+     }
+     
+     
+     
+}

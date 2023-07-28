@@ -1,0 +1,59 @@
+package com.surya;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class EmployeController {
+	@Autowired
+	EmployeService es;
+
+	@RequestMapping("/save")
+	public String addDetails(@RequestBody EmployeeModel em) {
+		es.addDetails(em);
+		return "data added succussfully";
+	}
+
+	@PutMapping("/update/{employeId}")
+	public String editDetails(@RequestBody EmployeeModel em, @PathVariable int employeId) {
+
+		es.editDetails(em, employeId);
+
+		return " data updated successfully";
+	}
+
+	@GetMapping("/findOne/{employeId}")
+	public EmployeeModel findOneId(@PathVariable int employeId) {
+
+		return es.findOneId(employeId);
+	}
+
+	@GetMapping("/findAll")
+
+	public List<EmployeeModel> findAllDetails() {
+
+		return es.findAllDetails();
+	}
+ @DeleteMapping ("/delete/{employeId}")
+	public String deleteDetails(@PathVariable int employeId) {
+		 return es.deleteDetails(employeId)+" delete data successfullyy";
+
+
+ 
+ @DeleteMapping ("/delete/{employeName}")
+	public String deleteName(@PathVariable ("employeName")String employeName) {
+		return es.deleteName(employeName)+"delete successfully";
+
+		
+
+	}
+
+}

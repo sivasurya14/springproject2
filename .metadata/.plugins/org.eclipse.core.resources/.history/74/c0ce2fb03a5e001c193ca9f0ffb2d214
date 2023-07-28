@@ -1,0 +1,27 @@
+package in.onesoft.bikes;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Getter;
+
+
+@Entity(name = "bike")
+public class BikeEntity {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	private int modelno;
+	@Column
+	private String model;
+	@Column
+	private String colour;
+	@Column
+	private int price;
+	
+
+	}

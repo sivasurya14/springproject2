@@ -1,0 +1,34 @@
+package in.onesoft.filesupload;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+public class RoleEntity {
+	 
+	@Id    @GeneratedValue()
+	int id;
+	String rolename;
+	int roleid;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getRolename() {
+		return rolename;
+	}
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
+	public int getRoleid() {
+		return roleid;
+	}
+	public void setRoleid(int roleid) {
+		this.roleid = roleid;
+	}
+	
+	
+
+}

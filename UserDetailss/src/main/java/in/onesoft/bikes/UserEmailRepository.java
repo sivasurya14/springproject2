@@ -1,0 +1,7 @@
+package in.onesoft.bikes;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserEmailRepository extends JpaRepository <UserEmailEntity, Integer> {
+}
+

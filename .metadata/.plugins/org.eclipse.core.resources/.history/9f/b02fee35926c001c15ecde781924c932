@@ -1,0 +1,45 @@
+package in.onesoft.shop;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class ImageEntity {	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id ;
+	@Column
+    private String imagename;
+	@Column
+	private byte[] image;
+	public ImageEntity(int id, String imagename, byte[] image) {
+		super();
+		this.id = id;
+		this.imagename = imagename;
+		this.image = image;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getImagename() {
+		return imagename;
+	}
+	public void setImagename(String imagename) {
+		this.imagename = imagename;
+	}
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
+	
+	
+	
+}

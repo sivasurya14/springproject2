@@ -1,0 +1,10 @@
+package in.onesoft.filesupload;
+
+public class RoleEntity {
+	 
+	
+	int id;
+	String rolename;
+	int roleid;
+
+}

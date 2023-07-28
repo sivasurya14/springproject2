@@ -1,0 +1,38 @@
+package in.onesoft.shop;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/")
+public class ImageController {
+@Autowired
+ImageRepository imagerepo;
+    
+    @GetMapping("/hello")
+     public String message() {
+    	
+    	return "this is image ";
+    }
+
+
+    @GetMapping(path = { "/get/{imageName}" })
+
+    public ImageEntity getImage(@PathVariable("imageName") Byte image) throws IOException {
+
+        final Optional<ImageEntity> retrievedImage = imagerepo.findByImage(image);
+
+       ImageEntity img = newImageEntity(retrievedImage.get().getImage(), retrievedImage.get().getImage(),
+
+                decompressBytes(retrievedImage.get().getImage()));
+        return img;
+    
+    
+}
+}

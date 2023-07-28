@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;pom.xml&apos; to &apos;UserProject&apos;" description="Move &apos;pom.xml&apos; to &apos;UserProject&apos;" destination="/UserProject" element1="/UserDetails/pom.xml" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1639373566330" updateReferences="true"/>
+</session>

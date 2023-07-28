@@ -1,0 +1,45 @@
+package in.onesoft.filesupload;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name ="role")
+
+public class RoleEntity {
+	 
+	@Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	int id;
+	@Column
+	String rolename;
+	@Column
+	int userid;
+	public RoleEntity() {
+	}
+	public RoleEntity(int id, String rolename, int userid) {
+		super();
+		this.id = id;
+		this.rolename = rolename;
+		this.userid = userid;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getRolename() {
+		return rolename;
+	}
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
+	public int getuserid() {
+		return userid;
+	}
+	public void setuserid(int userid) {
+		this.userid = userid;
+	}
+}

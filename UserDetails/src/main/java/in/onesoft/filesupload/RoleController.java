@@ -1,0 +1,43 @@
+package in.onesoft.filesupload;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/")
+public class RoleController {
+	@Autowired
+	RolesRepository roleRepo;
+	@Autowired
+	QualificationRepository qualifiRepo;
+	
+	
+	@GetMapping("/get")
+	String getMsg() {
+		return "sucess user test ";
+	}
+	
+	@GetMapping("/usermanagement/")
+	   
+	List<RoleEntity> getRoles(){
+		List<RoleEntity> li =roleRepo.findAll();	
+		return li;
+	}
+	@GetMapping("/qualification/")
+	List<QualificationEntity> getQuali(){
+		List<QualificationEntity> list =qualifiRepo.findAll();
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+}

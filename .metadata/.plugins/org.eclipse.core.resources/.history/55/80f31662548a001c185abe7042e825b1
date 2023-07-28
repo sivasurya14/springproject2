@@ -1,0 +1,160 @@
+<html>
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	
+</script>
+<style>
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+#center{
+	text-align: center;
+	margin-right: 50px;
+}
+#heading  th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+th, td {
+	table-layout: inherit;
+}
+#tbl {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#tbls td, #tbl th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#tbl tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#tbl tr:hover {
+	background-color: #ddd;
+}
+
+#tbl th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #04AA6D;
+	color: white;
+}
+
+#tbl {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#tbl td, #tbl th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#tbl tr:nth-child(even) {
+	background-color: #95f0ca;
+}
+
+#tbltr:hover {
+	background-color: #ddd;
+}
+
+#tbl th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #04AA6D;
+	color: white;
+}
+h2, p {
+text-align: center;
+font-style: italic;
+ 
+}
+#button1 {
+border-color: maroon;
+position: absolute;
+text-align: center;
+}
+</style>
+</head>
+
+<body>
+	<div id="tbl">
+		<br>
+		<h2>Car spa</h2>
+		<table>
+			<p>Click submit button to see Car Model Names</p>
+		</table>
+		<div id ="center">
+		
+		
+		<button id="button1" type="button" onclick="SetTable();"> submit</button>
+		</div>
+	</div>
+	
+</body>
+<script>
+	function SetTable() {
+			$.ajax({
+					url : 'http://localhost:8080/cars/',
+					success : function(result) {
+						console.log('step one');
+						var html = "<table border=5>";
+						html += "<tr 'id=heading'><th>Id</th><th>Model</th><th>Brand</th><th>Enginecc</th><th>Release Date</th><th colspan='2'> Actions </th></tr>";
+						for (var i = 0; i < result.length; i++) {
+							html += '<tr>';
+							var cars = result[i];
+							html += "<td>" + cars.id + "</td>";
+							html += "<td>" + cars.brand + "</td>";
+							html += "<td>" + cars.model + "</td>";
+							html += "<td>" + cars.enginecc + "</td>";
+							html += "<td>" +cars.date+"</td>";
+							html += "<td><button id ="+cars.id+'onclick ="deleteTable();">Delete </button></td>';
+							html += "<td><button type ='button' onclick ='editTable();'>Edit</button></td>";
+							html += '</tr>';
+						}
+						html += "<td><button type ='button' onclick ='editTable();'>Add </button></td>";
+						html += "<td   colspan='3'><input type='date'> from</td> ";
+						html += "<td><input type='date'> to</td> ";
+						html += "<td><button type ='button' onclick ='filterTable();'> Fillter </button> </td>"
+						
+						html += "</table>";
+						document.getElementById('tbl').innerHTML = html;
+						 alert("Hello! I am an alert box!");
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});	
+	}
+	function deleteTable(e){
+		alert("success");
+		e = e||window.event; 
+		var id = e.currentTarget.id;
+		$.ajax({
+	method :'DELETE',
+	url :'http://localhost:8080/delete/'+id,
+	success :function(){
+	window.location.reload();
+	},
+
+	});
+	}
+	
+	function filterTable(){	
+	 console.log("success")
+	}	
+</script>
+</html>

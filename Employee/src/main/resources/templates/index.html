@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	$(function() {
+		$('div').on('click', '.deletebtn', function() {
+			//var employeId = $(this).closest("tr").attr('employeId');
+			var employeId = $(this).closest("tr").attr('employeId');
+			console.log($(this).closest("tr").closest("td").text());
+			alert("The deleted id value is : " + employeId);
+			
+			getAllInfo();
+		});
+	});
+	$(function() {
+		$('div')
+				.on(
+						'click',
+						'.editbtn',
+						function() {
+							var row = $(this).closest("tr");
+							var employeId = row.attr('employeId');
+							var employeName = row.children()[0].innerHTML;
+							var txt = "<td><input type=text class=newempname value="+employeName+"></td><td><input type=text class=newempcity value="+employeCity+"></td><td><button type=button class='editsavebtn'>Save</button></td><td><button type=button class='editcancelbtn'>Cancel</button></td>";
+							row.html(txt);
+						});
+		$('div')
+				.on(
+						'click',
+						'.editcancelbtn',
+						function() {
+							var row = $(this).closest("tr");
+							var employeName = row.children()[0].childNodes[0].value;
+							var employeCity = row.children()[1].childNodes[0].value;
+							var txt = "<td>"
+									+ employeName
+									+ "</td><td>"
+									+ employeCity
+									+ "</td><td><button type=button class='editbtn'>Update</button></td><td><button type=button class='deletebtn'>Delete</button></td>";
+							row.html(txt);
+						});
+		$('div').on('click', '.editsavebtn', function() {
+			var jsonPen = {};
+			var row = $(this).closest("tr");
+			var employeId = row.attr('employeId');
+			alert(employeId);
+			jsonPen.employeName = row.children()[0].childNodes[0].value;
+			jsonPen.employeCity = row.children()[1].childNodes[0].value;
+
+			var PenObj = JSON.stringify(jsonPen);
+			alert(PenObj);
+			$.ajax({
+				url : "http://localhost:9999/Update/" + employeId,
+				method : "PUT",
+				data : PenObj,
+				contentType : "application/json",
+				success : function(data) {
+					alert(data);
+
+					getAllInfo();
+				},
+				error : function(error) {
+					alert("Update error Occured");
+				}
+			});
+		});
+	});
+	function getAllInfo() {
+$.ajax({
+								url : "http://localhost:9999/findAll",
+					method : "GET",
+					success : function(data) {
+						var txt = '';
+						for (var i = 0; i < data.length; i++) {
+							var btnTxt = "<td><button type=button class='editbtn'>Update</button></td><td><button type=button class='deletebtn'>Delete</button></td>";
+							var line = "<tr id="+data[i].employeId+"></td><td>"
+									+ data[i].employeName + "</td><td>"
+									+ data[i].employeCity + "</td><td>"
+									+ btnTxt + "</tr>";
+							txt = txt + line;
+						}
+						$("#tableemp").append(txt);
+						console.log(data);
+					},
+					error : function(error) {
+						alert("Error Occured");
+					}
+				});
+	}
+	$(document).ready(function() {
+		getAllInfo();
+		$("#savebtn").click(function() {
+			var jsonPen = {};
+			jsonPen.employeName = $('#addname').val();
+			jsonPen.employeCity = $('#addcity').val();
+
+			var PenObj = JSON.stringify(jsonPen);
+			alert(PenObj);
+			$.ajax({
+				url : "http://localhost:9999/save",
+				method : "POST",
+				data : PenObj,
+				contentType : "application/json",
+				success : function(data) {
+					alert(data);
+					getAllInfo();
+					hideDivSection();
+				},
+				error : function(err) {
+					alert("save error");
+				}
+			});
+		});
+		function hideDivSection() {
+			document.getElementById("addempname").value = " ";
+			document.getElementById("addempcity").value = " ";
+
+			document.getElementById("adddiv").hidden = true;
+			document.getElementById("addbtn").hidden = false;
+		}
+		$("#cancelbtn").click(function() {
+			document.getElementById("addempname").value = " ";
+			document.getElementById("addempcity").value = " ";
+
+			document.getElementById("adddiv").hidden = true;
+			document.getElementById("addbtn").hidden = false;
+		});
+	});
+</script>
+</head>
+		<h1>Welcome to Employees details:</h1>
+		<div>
+			<table id="tableemp" border="1">
+				<tr>
+					<th>Name</th>
+					<th>City</th>
+					<th colspan=3, align="center">Actions</th>
+				</tr>
+			</table>
+			<br> <br> <input type="button" id="addbtn" value="Add">
+		</div>
+		<br> <br>
+		<div id="adddiv">
+			Name : <input type="text" id="addname"> <br> <br>
+			City : <input type="text" id="addcity"> <br> <br> <input
+				type="button" id="savebtn" value="Enter"> <input
+				type="button" id="cancelbtn" value="Cancel">
+		</div>
+</body>
+</html>

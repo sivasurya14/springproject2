@@ -1,0 +1,13 @@
+package in.onesoft.bikes;
+
+import javax.persistence.Entity;
+
+@Entity
+public class UserExperienceEntity {
+	
+	int id ; 
+	int userid;
+	String companyname;
+	int fromyear ;
+	int toyear;
+}

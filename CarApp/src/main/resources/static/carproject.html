@@ -1,0 +1,275 @@
+<html>
+
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	
+</script>
+<style>
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#center {
+	text-align: center;
+	margin-right: 50px;
+}
+
+#heading  th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #04AA6D;
+	color: white;
+}
+
+#addForm {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #04AA6D;
+	color: white;
+}
+
+th, td {
+	table-layout: inherit;
+}
+
+#tbl {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#tbls td, #tbl th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#tbl tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#tbl tr:hover {
+	background-color: #ddd;
+}
+
+#tbl th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #04AA6D;
+	color: white;
+}
+
+#tbl {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#tbl td, #tbl th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#tbl tr:nth-child(even) {
+	background-color: #95f0ca;
+}
+
+#tbltr:hover {
+	background-color: #ddd;
+}
+
+#tbl th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #04AA6D;
+	color: white;
+}
+
+h2, p {
+	text-align: center;
+	font-style: italic;
+}
+
+#button1 {
+	position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
+  color: green;
+  font-size: 16px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+
+}
+#bodycontent{
+background-image: url("473239.jpg");
+
+}
+</style>
+</head>
+<body id ="bodycontent">
+	<div id="tbl">
+		<br>
+		<h2>Car Details Database </h2>
+		<table>
+			<p>Click submit button to see Car Model Names</p>
+		</table>
+		<div id="center">
+			<button id="button1" type="button" onclick="SetTable();">submit</button>
+		</div>
+	</div>
+</body>
+<script>
+	function SetTable() {
+		$
+				.ajax({
+					url : 'http://localhost:8081/cars/',
+					success : function(result) {
+						console.log('step one');
+						var html = "<table border=5>";
+						html += "<tr 'id=heading'><th>Id</th><th>Model</th><th>Brand</th><th>Enginecc</th><th>Release Date</th><th colspan='2'> Actions </th></tr>";
+						for (var i = 0; i < result.length; i++) {
+							html += '<tr>';
+							var cars = result[i];
+							html += "<td >" + cars.id + "</td>";
+							html += "<td>" + cars.brand + "</td>";
+							html += "<td>" + cars.model + "</td>";
+							html += "<td>" + cars.enginecc + "</td>";
+							html += "<td>" + cars.date + "</td>";
+							html += '<td><button id ='
+									+ cars.id
+									+ ' class="button button3" onclick="deleteTable();">Delete</button><td>';
+							html += '<td><button id ='
+									+ cars.id
+									+ ' class="button button4" onclick="editTable();">Edit</button><td>';
+							html += '</tr>';
+						}
+						html += '<td><button type ="button" onclick ="addTable();"> Add Details </button></td>';
+						html += "<td><label for='fyear'>Fromyear</label><input type='text' id='fyear' name='fromyear' placeholder='from year'</td>";
+						html += "<td><label for='tyear'>Toyear</label><input type='text' id='tyear' name='toyear' placeholder='to year'</td>";
+						html += "<td><button type ='button' onclick ='filterTable();'> Fillter </button> </td>"
+
+						html += "</table>";
+						document.getElementById('tbl').innerHTML = html;
+
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+	}
+	function deleteTable(e) {
+		
+		alert(id+" is deleted success");
+		e = e || window.event;
+		var id = e.currentTarget.id;
+		//alert(id);
+		$.ajax({
+			method : 'DELETE',
+			url : 'http://localhost:8081/delete/' + id,
+			success : function() {
+				SetTable();
+			},
+		});
+	}
+
+	function filterTable() {
+		console.log("filter")
+		var value1 = document.getElementById("fyear").value;
+		var value2 = document.getElementById("tyear").value;
+		console.log(value1)
+		$
+				.ajax({
+					url : 'http://localhost:8081/getbyyear/' + value1 + '/'
+							+ value2,
+					success : function(result) {
+						console.log('step one');
+						var html = "<table border=5>";
+						html += "<tr 'id=heading'><th>Id</th><th>Model</th><th>Brand</th><th>Enginecc</th><th>Release Date</th><th colspan='2'> Actions </th></tr>";
+						for (var i = 0; i < result.length; i++) {
+							html += '<tr>';
+							var cars = result[i];
+							html += "<td>" + cars.id + "</td>";
+							html += "<td>" + cars.brand + "</td>";
+							html += "<td>" + cars.model + "</td>";
+							html += "<td>" + cars.enginecc + "</td>";
+							html += "<td>" + cars.date + "</td>";
+							html += "<td><button id ="
+									+ cars.id
+									+ 'onclick ="deleteTable();">Delete </button></td>';
+							html += "<td><button type ='button' onclick ='editTable();'>Edit</button></td>";
+							html += '</tr>';
+						}
+						html += '<td><button type ="button" onclick ="addTable();"> Add </button></td>';
+						html += "<td><label for='fyear'>Fromyear</label><input type='text' id='fyear' name='fromyear' placeholder='from year'</td>";
+						html += "<td><label for='tyear'>Toyear</label><input type='text' id='tyear' name='toyear' placeholder='to year'</td>";
+						html += "<td><button type ='button' onclick ='filterTable();'> Fillter </button> </td>"
+						html += "</table>";
+						document.getElementById('tbl').innerHTML = html;
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+	}
+	function addDetails() {
+		alert("hii")
+		console.log("success")
+		var form1 = document.getElementById("id").value;
+		var form2 = document.getElementById("brand").value;
+		var form3 = document.getElementById("model").value;
+		var form4 = document.getElementById("enginecc").value;
+		var form5 = document.getElementById("date").value;
+		var formData = {
+			id : form1,
+			brand : form2,
+			model : form3,
+			enginecc : form4,
+			date : form5
+		};
+		var formDatum = JSON.stringify(formData);
+		console.log(formDatum);
+		console.log("success")
+		$.ajax({
+			type : "POST",
+			url : 'http://localhost:8081/save/',
+			data : formDatum,
+
+			contentType : "application/json",
+			success : function() {
+				SetTable();
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	}
+	function addTable() {
+		var html = '<form id="addForm">';
+		html += '<label for="id">Id</label><br>'
+				+ '<input type="text" id="id" name="id" placeholder="enter id"><br><br>'
+				+ '<label for="brand">Brand</label><br>'
+				+ '<input type="text" id="brand" name="model" placeholder="enter "><br><br>'
+				+ '<label for="model">Model</label><br>'
+				+ '<input type="text" id="model" name="brand" placeholder="enter model"><br><br>'
+				+ '<label for="enginecc">EngineCc</label><br>'
+				+ '<input type="text" id="enginecc" name="enginecc" placeholder="enter enginecc"><br><br>'
+				+ '<label for="date">date</label><br>'
+				+ '<input type="text" id="date" name="date" placeholder="enter date"><br><br>'
+				+ '<button type ="button" onclick ="addDetails();"> Submit</button>'
+		html += '</form>';
+		document.getElementById("tbl").innerHTML = html;
+		console.log(html);
+	}
+</script>
+</html>
